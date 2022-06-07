@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "d29ce27d-4d5f-41eb-81e5-e20c09440ec2",
+		"name": "port-domain-services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Port by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/ports/AAAAAA",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"ports",
+						"AAAAAA"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all ports",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/ports",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"ports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Port",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"AAAAAA\",\n    \"name\": \"Knarrevik\",\n    \"city\": \"Knarrevik\",\n    \"country\": \"Norway\",\n    \"alias\": [],\n    \"regions\": [],\n    \"coordinates\": [\n        5.15,\n        60.37\n    ],\n    \"province\": \"Hordaland\",\n    \"timezone\": \"Europe/Oslo\",\n    \"unlocs\": [\n        \"NOKRV\"\n    ],\n    \"code\": \"\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/ports",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"ports"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "43d45d83-b22b-46db-b51b-25b07bdca26f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e222376d-2b8c-4164-b0ee-223b8ec62637",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
