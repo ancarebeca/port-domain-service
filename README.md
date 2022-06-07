@@ -17,7 +17,7 @@ When the services start it also loads in  the DB the port information store in [
     docker-compose up 
  ```
 
-You can find in this [postman](docs/postman/port-domain-services.postman_collection.json) file all the calls need it to test the application
+You can find in the [postman](docs/postman/port-domain-services.postman_collection.json) file all the calls need it to test the application
 
 ## Future improvements
 
