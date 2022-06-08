@@ -21,7 +21,7 @@ You can find in the [postman](docs/postman/port-domain-services.postman_collecti
 
 ## Future improvements
 
-The list below contains the TODO that can be done to improve the services that due to time constraints they weren't done
+The list below contains the TODO that can be done to improve the service
 
 - [ ] Add tests to cover the unhappy path
 - [ ] Add the requestID to the logs to be able to trace the flow execution
