@@ -14,7 +14,6 @@ func (r Reader) Read(file *os.File) ([]port.Port, error) {
 	var ports []port.Port
 	dec := json.NewDecoder(file)
 
-	// read open bracket
 	_, err := dec.Token()
 	if err != nil {
 		return ports, err
