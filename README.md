@@ -5,12 +5,17 @@ This service is responsible to handles HTTP requests to retrieve, update and add
 When the services start it also loads in  the DB the port information store in [ports.json](fixtures/ports.json) 
 
 ## HTTP API
+
  - Get all ports store in the system `GET /ports` 
+
  - Get information for a specific port given an ID `GET /ports/{id}`
+
  - Add/Update a port `POST /ports` 
+
    Example of payload: `{"id":"AAAAAA","name":"Knarrevik","city":"Knarrevik","country":"Norway","alias":[],"regions":[],"coordinates":[5.15,60.37],"province":"Hordaland","timezone":"Europe/Oslo","unlocs":["NOKRV"],"code":""`
-    Note: If the user add a new Port it will be stored in the system but if the port already exists it will be updated as the exercises required.
-    Personally, I would prefer to create two different endpoints for it (one for update and another one for create a port)
+    
+   Note: If the user add a new Port it will be stored in the system but if the port already exists it will be updated as the exercises required.
+   Personally, I would prefer to create two different endpoints for it (one for update and another one for create a port)
 
 ## How to run it?
  ``` 
