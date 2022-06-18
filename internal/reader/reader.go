@@ -3,16 +3,17 @@ package reader
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ancarebeca/PortDomainService/internal/port"
-	"os"
+	"github.com/ancarebeca/PortDomainService/internal/domain/entity"
+	"io"
 )
 
-type Reader struct{}
+type JSONReader struct {
+}
 
-// Read reads json file that contains port information
-func (r Reader) Read(file *os.File) ([]port.Port, error) {
-	var ports []port.Port
-	dec := json.NewDecoder(file)
+// Read reads json object that contains domain information
+func (jr JSONReader) Read(r io.Reader) ([]entity.Port, error) {
+	var ports []entity.Port
+	dec := json.NewDecoder(r)
 
 	_, err := dec.Token()
 	if err != nil {
@@ -26,7 +27,7 @@ func (r Reader) Read(file *os.File) ([]port.Port, error) {
 			return ports, err
 		}
 
-		var p port.Port
+		var p entity.Port
 		err := dec.Decode(&p)
 		if err != nil {
 			return ports, err

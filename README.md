@@ -2,7 +2,7 @@
 
 ## Purpose
 This service is responsible to handles HTTP requests to retrieve, update and add new port information.
-When the services start it also loads in  the DB the port information store in [ports.json](fixtures/ports.json) 
+When the services start it also loads in  the DB the port information store in [ports.json](fixture/ports.json) 
 
 ## HTTP API
 

@@ -3,10 +3,12 @@ package app
 import (
 	"context"
 	"flag"
-	"github.com/ancarebeca/PortDomainService/internal/httpservice"
-	"github.com/ancarebeca/PortDomainService/internal/port"
+	"github.com/ancarebeca/PortDomainService/internal/adapter"
+	"github.com/ancarebeca/PortDomainService/internal/controller"
+	"github.com/ancarebeca/PortDomainService/internal/domain/entity"
+	"github.com/ancarebeca/PortDomainService/internal/domain/repository"
 	"github.com/ancarebeca/PortDomainService/internal/reader"
-	"github.com/ancarebeca/PortDomainService/internal/repository"
+	service "github.com/ancarebeca/PortDomainService/internal/service"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -20,32 +22,35 @@ const timeout = 15 * time.Second
 
 func Run() {
 
-	file, err := os.Open("/usr/src/app/fixtures/ports.json") // TODO: The path could be stored inside `/resources/values.yml` and load it from there
+	file, err := os.Open("/usr/src/app/fixture/ports.json") // TODO: The path could be stored inside `/resources/values.yml` and load it from there
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
-
-	//file, err := os.Open("/Users/rebeca/workspace/port-domain-service/fixtures/ports.json") // TODO: The path could be stored inside `/resources/values.yml` and load it from there
-	//if err != nil {
-	//	log.Fatalf(err.Error())
-	//}
 
 	var wait time.Duration
 	flag.DurationVar(&wait, "graceful-timeout", timeout, "the duration for which the server gracefully wait for existing connections to finish")
 	flag.Parse()
 
-	repo := loadRepository()
-	err = repo.LoadPortsFromFile(file)
-	if err != nil {
-		log.Fatalf(err.Error())
+	repo := repository.Repository{
+		DB: adapter.MemDB{DB: make(map[string]entity.Port)},
 	}
 
-	ctx := context.Background()
-	portHandler := httpservice.PortsHandler{
-		Repository: repo,
+	portLoader := service.Loader{
+		ObjectReader: reader.JSONReader{},
+		Repository:   repo,
 	}
 
-	router := loadRoutes(portHandler)
+	if err := portLoader.Load(file); err != nil {
+		log.Fatalf("cannot load ports from file: %v", err)
+	}
+
+	portController := controller.PortController{
+		PortsService: &service.Ports{
+			Repository: repo,
+		},
+	}
+
+	router := loadRoutes(portController)
 
 	srv := &http.Server{
 		Handler:      router,
@@ -76,23 +81,14 @@ func Run() {
 	// until the timeout deadline.
 	err = srv.Shutdown(ctx)
 	if err != nil {
-		log.Fatalf("srv.Shutdown: %w", err)
+		log.Fatalf("srv.Shutdown: %v", err)
 	}
 }
 
-func loadRoutes(portHandler httpservice.PortsHandler) *mux.Router {
+func loadRoutes(portHandler controller.PortController) *mux.Router {
 	router := mux.NewRouter()
 	router.HandleFunc("/ports", portHandler.GetAllPorts).Methods("GET")
 	router.HandleFunc("/ports/{id}", portHandler.GetPort).Methods("GET")
 	router.HandleFunc("/ports", portHandler.AddOrUpdatesPort).Methods("POST")
 	return router
-}
-
-func loadRepository() repository.Repository {
-	db := make(map[string]port.Port)
-	repo := repository.Repository{
-		DB:     repository.MemDB{DB: db},
-		Reader: reader.Reader{},
-	}
-	return repo
 }
