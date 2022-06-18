@@ -15,7 +15,7 @@ all: clean build
 .PHONY: build
 ## build: builds the application
 build: format
-	@go build -o ${APP} main.go
+	@go build -o ${APP} cmd/main.go
 
 ## format: formats all packages
 format:
@@ -24,7 +24,7 @@ format:
 .PHONY: run
 ## run: runs go run main.go
 run:
-	go run -race main.go
+	go run -race cmd/main.go
 
 .PHONY: clean
 ## clean: cleans the binary
