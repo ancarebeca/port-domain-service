@@ -58,7 +58,7 @@ docker-up:
 .PHONY: docker-down
 ## docker-down: stops the program instances, their databases and remove the containers
 docker-down:
-	docker-compose -f docker-compose.yml down -d
+	docker-compose down
 
 
 # -----------------------------------------------------------------
