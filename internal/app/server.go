@@ -22,7 +22,7 @@ const timeout = 15 * time.Second
 
 func Run() {
 
-	file, err := os.Open("/usr/src/app/fixture/ports.json") // TODO: The path could be stored inside `/resources/values.yml` and load it from there
+	file, err := os.Open("./ports.json") // TODO: The path could be stored inside `/resources/values.yml` and load it from there
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
