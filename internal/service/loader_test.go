@@ -5,7 +5,6 @@ import (
 	"github.com/ancarebeca/PortDomainService/internal/adapter"
 	"github.com/ancarebeca/PortDomainService/internal/domain/entity"
 	"github.com/ancarebeca/PortDomainService/internal/domain/repository"
-	"github.com/ancarebeca/PortDomainService/internal/reader"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"os"
@@ -20,7 +19,6 @@ func TestPortLoader(t *testing.T) {
 
 		db := make(map[string]entity.Port)
 		loader := Loader{
-			reader.JSONReader{},
 			repository.Repository{
 				DB: adapter.MemDB{DB: db},
 			},

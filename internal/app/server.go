@@ -7,8 +7,7 @@ import (
 	"github.com/ancarebeca/PortDomainService/internal/controller"
 	"github.com/ancarebeca/PortDomainService/internal/domain/entity"
 	"github.com/ancarebeca/PortDomainService/internal/domain/repository"
-	"github.com/ancarebeca/PortDomainService/internal/reader"
-	service "github.com/ancarebeca/PortDomainService/internal/service"
+	"github.com/ancarebeca/PortDomainService/internal/service"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -36,8 +35,7 @@ func Run() {
 	}
 
 	portLoader := service.Loader{
-		ObjectReader: reader.JSONReader{},
-		Repository:   repo,
+		Repository: repo,
 	}
 
 	if err := portLoader.Load(file); err != nil {

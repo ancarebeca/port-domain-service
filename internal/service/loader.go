@@ -1,17 +1,14 @@
 package service
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/ancarebeca/PortDomainService/internal/domain/entity"
 	"github.com/ancarebeca/PortDomainService/internal/domain/repository"
 	"io"
 )
 
-type ObjectReader interface {
-	Read(r io.Reader) ([]entity.Port, error)
-}
-
 type Loader struct {
-	ObjectReader
 	repository.Repository
 }
 
@@ -19,18 +16,34 @@ type LoaderService interface {
 	Load(r io.Reader) error
 }
 
-// Load ports information from io.Reader into the system
+// Load into de system a json file that contains domain information
 func (l Loader) Load(r io.Reader) error {
-	ports, err := l.Read(r)
+	dec := json.NewDecoder(r)
+
+	_, err := dec.Token()
 	if err != nil {
 		return err
 	}
 
-	for _, p := range ports {
-		err := l.DB.Write(p)
+	var token json.Token
+	for dec.More() {
+		token, err = dec.Token()
 		if err != nil {
 			return err
 		}
+
+		var p entity.Port
+		err := dec.Decode(&p)
+		if err != nil {
+			return err
+		}
+
+		p.ID = fmt.Sprint(token)
+		dbError := l.AddPort(p)
+		if dbError != nil {
+			return dbError
+		}
 	}
+
 	return nil
 }
