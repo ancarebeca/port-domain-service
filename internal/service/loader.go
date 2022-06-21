@@ -16,7 +16,7 @@ type LoaderService interface {
 	Load(r io.Reader) error
 }
 
-// Load into de system a json file that contains domain information
+// Load in the system a json file that contains domain information
 func (l Loader) Load(r io.Reader) error {
 	dec := json.NewDecoder(r)
 
