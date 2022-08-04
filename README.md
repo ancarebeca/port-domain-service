@@ -2,7 +2,7 @@
 
 ## Purpose
 This service is responsible to handles HTTP requests to retrieve, update and add new port information.
-When the services start it also loads in  the DB the port information store in [ports.json](fixtures/ports.json) 
+When the services start it also loads in  the DB the port information store in [ports.json](fixture/ports.json) 
 
 ## HTTP API
 
@@ -19,7 +19,7 @@ When the services start it also loads in  the DB the port information store in [
 
 ## How to run it?
  ``` 
-    docker-compose up 
+    make docker-up
  ```
 
 You can find in the [postman](docs/postman/port-domain-services.postman_collection.json) file all the calls need it to test the application
